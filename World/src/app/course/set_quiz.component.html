@@ -1,0 +1,45 @@
+<h1 class="container-fluid">Set Quiz  </h1>
+
+<div>
+<form>
+      
+
+  <label for="exampleFormControlTextarea1">Enter Quiz Description</label>
+  <div class="form-group name">
+    <textarea 
+      type="text"
+      class="form-control" 
+      id="exampleFormControlTextarea1" 
+      rows="5"
+      name="content"
+      [(ngModel)]="model.QuizDescription"
+      placeholder="Quiz Description "
+      >
+    </textarea>
+</div>
+
+<p></p>
+
+<div class="form-group">
+  <label>Enter Quiz due date</label>
+  <input type="date"
+         class="form-control input"
+         id="name"
+         name="name"
+         [(ngModel)]="model.QuizDueDate"
+         >
+</div>
+
+<p></p>
+
+  <div class="submitBtnContainer">
+    <button type="submit" class="btn btn-success" (click)="submit()">SAVE</button>
+    
+
+    
+    <button type="submit" class="btn btn-success" [routerLink]="['/question', 1]" >Create Question</button>
+ 
+  </div>
+
+</form>
+</div>
