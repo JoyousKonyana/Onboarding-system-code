@@ -8,5 +8,6 @@ export * from './ss_administrator.component';
  export * from './import_employee.component';
  export * from './crud_employee.component';
  export * from './admindashboard.component';
+ export * from './onboarder.component';
 
  export * from './departcharts';

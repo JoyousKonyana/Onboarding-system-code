@@ -8,7 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {
      Register_EmployeeComponent,
      Assign_EquipmentComponent,
-  //   OnboarderComponent,
+     OnboarderComponent,
      SS_AdministratorComponent,
      CRUD_FAQComponent,
      CRUD_EmployeeComponent,
@@ -92,12 +92,12 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'about',
     component: AboutComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
 
 // {
@@ -123,14 +123,14 @@ const routes: Routes = [
   { 
     path: 'admin', 
     component: AdminComponent, 
-    canActivate: [AuthGuard] 
+    //canActivate: [AuthGuard] 
    },
 
  //Users path pages
   { 
     path: 'ss_users', 
     component: SS_UsersComponent, 
-    canActivate: [AuthGuard] 
+    //canActivate: [AuthGuard] 
   },
  { path: 'assign_user_role', 
  component: Assign_User_RoleComponent, 
@@ -143,7 +143,11 @@ const routes: Routes = [
   },
 
 // //Administrator path pages
-// { path: 'onboarder', component: OnboarderComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
+ { 
+   path: 'onboarder', 
+   component: OnboarderComponent, 
+   //canActivate: [AuthGuard], data: { roles: [Role.Admin] } 
+  },
   { 
     path: 'admindashboard', 
     component: AdminDashboardComponent, 

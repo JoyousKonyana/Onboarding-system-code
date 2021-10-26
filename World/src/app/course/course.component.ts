@@ -55,16 +55,6 @@ export class CourseComponent implements OnInit {
     CourseName: '',
   };
 
-  //Remove this bad boy
-  testData() {
-    this.course.push(
-      { courseId: 1, courseDescription: 'jfsd', courseDueDate: '213', courseName: '3212'},
-      { courseId: 2, courseDescription: 'fklsdm', courseDueDate: '21', courseName: 'as'},
-      { courseId: 3, courseDescription: 'cxzkl', courseDueDate: '21', courseName: ''},
-      { courseId: 4, courseDescription: '321', courseDueDate: '', courseName: ''},
-    );
-  }
-
   addCourse() { 
     if(Object.keys(this.model).length < 3)
     {
@@ -92,10 +82,9 @@ export class CourseComponent implements OnInit {
                 });
     }
   }
-    
   
   deleteCourse(i: number) {
-    this.courseService.delete(i+1)
+    this.courseService.delete(i)
             .pipe(first())
             .subscribe(
                 data => {

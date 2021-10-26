@@ -1,0 +1,33 @@
+<div class="AddEmployeeTitleContainer">
+    <div class="addEmployeeTitleContainer">
+      <div>
+        Onboarder
+      </div>
+      <br/>
+    </div>
+</div>
+<p>Breif Description of page. You can only View Onboarders within the system. You cannot Edit, Delete and Create, please refer to Help file to naviagte to those functions.</p>
+    
+    <div class="search-hero container">
+    <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for an Onboarder">
+    </div>
+    
+    <div class="tableWrapper">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-3">Onboarder ID</th>
+        <th class="col-5">First Name</th>
+        <th class="col-2">Last Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of onboarder | filter:searchText; let i = index">
+        <td>{{item.onboarderId}}</td>
+        <td>{{item.employee.firstName}}</td>
+        <td>{{item.employee.lastName}}</td>
+      </tr>
+    </tbody>
+    </table>
+    </div>
+    

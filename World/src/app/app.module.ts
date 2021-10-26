@@ -19,6 +19,7 @@ import {
    CRUD_EmployeeComponent,
    Import_EmployeeComponent,
    AdminDashboardComponent,
+   OnboarderComponent,
    DepartChartComponent,
  } from './administrator';
 
@@ -135,6 +136,7 @@ import { ChartsModule } from 'ng2-charts';
     CRUD_FAQComponent,
     CRUD_EmployeeComponent,
     Import_EmployeeComponent,
+    OnboarderComponent,
     AdminDashboardComponent,
     DepartChartComponent, //Chart
 
