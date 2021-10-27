@@ -12,11 +12,11 @@
       <h2>Menu</h2>
       <a class="nav-item nav-link" routerLink="/" style="color:#FFFFFF">Home</a>
       <a routerLink="/about" style="color:#FFFFFF">About</a>
-      <a routerLink="/ss_users" *ngIf="isAdmin" style="color:#FFFFFF">Users</a>
-      <a routerLink="/admin"  *ngIf="isAdmin" style="color:#FFFFFF">Role</a>
-      <a routerLink="/ss_administrator"  *ngIf="isAdmin" style="color:#FFFFFF">Administrator</a>
-      <a routerLink="/ss_course"  *ngIf="isAdmin"style="color:#FFFFFF">Course</a>
-      <a class="nav-item nav-link" routerLink="/ss_equipment" style="color:#FFFFFF">Equipment</a>
+      <a routerLink="/ss_users" *ngIf="isUsers" style="color:#FFFFFF">Users</a>
+      <a routerLink="/admin"  *ngIf="isAdministraor" style="color:#FFFFFF">Role</a>
+      <a routerLink="/ss_administrator"  *ngIf="isAdministraor" style="color:#FFFFFF">Administrator</a>
+      <a routerLink="/ss_course"  *ngIf="isCourse" style="color:#FFFFFF">Course</a>
+      <a class="nav-item nav-link" *ngIf="isEquipment" routerLink="/ss_equipment" style="color:#FFFFFF">Equipment</a>
       <a class="nav-item nav-link"  *ngIf="isOnboarder" routerLink="/ss_onboarder" style="color:#FFFFFF">Onboarder</a>
       <a class="nav-item nav-link" *ngif="isReport" routerLink="/ss_report" style="color:#FFFFFF">Report</a>
   </div>

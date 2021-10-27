@@ -28,6 +28,7 @@ import {
      CRUD_AchievementComponent,
     LessonComponent,
     OptionComponent,
+    Question_BankComponent
   } from './course';
 
   import {
@@ -312,6 +313,10 @@ const routes: Routes = [
   {
     path: 'question/:id',
     component: QuestionComponent,
+  },
+  {
+    path: 'question_bank',
+    component: Question_BankComponent,
   },
   { 
     path: 'option/:id', 

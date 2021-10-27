@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -15,7 +16,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class Assign_CourseComponent implements OnInit {
   onboarder: any[] = [];
   course: any[] = [];
-  //onboarder_course_enrollment: Onboarder_Course_Enrollment[] = [];
+  
+  date!: string;
 
   constructor(
       private onboarderService: OnboarderService,
@@ -31,11 +33,12 @@ export class Assign_CourseComponent implements OnInit {
     course: new FormControl('', Validators.required),
     onboarder: new FormControl ('',Validators.required),
     OnboarderEnrollmentDate: new FormControl('',Validators.required),
-    BadgeTotal: new FormControl('', Validators.required),
   })
 
   ngOnInit() { 
       this.loadAll();
+
+      this.date = new Date().toISOString().slice(0, 10);
   }
 
 private loadAll() {
@@ -66,21 +69,18 @@ private loadAll() {
       OnboarderId: 0,
       CourseId: 0,
       OnboarderEnrollmentDate: '',
-      BadgeTotal: '',
-      OnboarderGraduationDate: ''
   };
 
   addCourse_Onboarder_Enrollment() { 
     this.model2.CourseId = this.enrollmentForm.get('course')?.value;
     this.model2.OnboarderId = this.enrollmentForm.get('onboarder')?.value;
     this.model2.OnboarderEnrollmentDate = this.enrollmentForm.get('OnboarderEnrollmentDate')?.value;
-    this.model2.BadgeTotal = this.enrollmentForm.get('BadgeTotal')?.value;
 
-    this.onboarder_course_enrollmentService.create(this.model2)
+    this.courseService.assigne(this.model2)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Assign was successful', true);
+                    this.alertService.success('Course has been successfully Assigned', true);
                 },
                 error => {
                     this.alertService.error('Error, Assign was unsuccesful');

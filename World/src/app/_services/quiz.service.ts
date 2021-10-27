@@ -10,12 +10,6 @@ import {Question, Quiz} from '../_models';
 })
 export class QuizService {
 
-   //Joyous, please put the link of the API here
-   //url = 'https://localhost:44319/api/Question';  
-  //  header= new HttpHeaders(){
-  //   // Content-Type: "application/json"
-  //  };
-
   httHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) { } 
@@ -46,6 +40,9 @@ export class QuizService {
   }
   deleteQuestion(id: number) {
     return this.http.delete(`${this.urlQuestion + '/DeleteQuestion/' + id + '/' + this.userId}`);
+  }
+  getAllQuestion(): Observable<any[]> {  
+    return this.http.get<any[]>(`${this.urlQuestion}/GetAllQuestions/1`);  
   }
 
   //Option

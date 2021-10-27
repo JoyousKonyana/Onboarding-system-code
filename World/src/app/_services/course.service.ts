@@ -1,3 +1,4 @@
+import { Onboarder_Course_Enrollment } from './../_models/onboarder_course_enrollment';
 import { AssignCourse } from './../_models/assigncourse';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';  
@@ -38,8 +39,8 @@ export class CourseService {
     return this.http.post(`${this.url}/CreateCourse/` + this.userId, course);
   }
  
- assigne(assign: AssignCourse[]){
-   return this.http.post(`${this.url}/CreateCourse/AssignCourse`, assign);
+ assigne(assign: Onboarder_Course_Enrollment){
+   return this.http.post(`${this.url}/AssignCourse/` + this.userId, assign);
  }
 
 } 

@@ -33,21 +33,12 @@
   <div class="form-group">
     <label>Enter Enrollment Date:</label>
     <input type="date"
+          min="{{this.date}}"
            class="form-control input"
            id="enrollment"
            name="enrollment"
            formControlName="OnboarderEnrollmentDate"
            placeholder="Enrollment Date">
-  </div>
-
-   <div class="form-group ">
-    <label>Enter Badge Total:</label>
-    <input type="text"
-           class="form-control positionInput"
-           id="badge"
-           name="badge"
-           formControlName="BadgeTotal"
-           placeholder="Badge Total">
   </div>
 
   <div class="">

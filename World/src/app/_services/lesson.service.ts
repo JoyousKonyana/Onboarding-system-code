@@ -18,8 +18,8 @@ export class LessonService {
     return this.http.get<Lesson[]>(`${this.url}/GetAllLessons`);  
   }  
 
-  getLessonById(id: number): Observable<Lesson> {  
-    return this.http.get<Lesson>(`${this.url}/GetLessonByCourseId/`+id);  
+  getLessonById(id: number): Observable<any> {  
+    return this.http.get<any>(`${this.url}/GetLessonByCourseId/`+id);  
   }  
 
     getLesson_ContentByLessonoutcomeId(id: string): Observable<Lesson_Content> {  

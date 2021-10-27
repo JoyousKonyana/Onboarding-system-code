@@ -8,6 +8,8 @@ import { first } from 'rxjs/operators';
 import { Lesson } from '../_models';
 import { LessonService, AuthenticationService, AlertService } from '../_services';
 
+import { ModalService } from '../_modal';
+
 @Component({ 
     templateUrl: 'lesson.component.html',
     styleUrls: ['./ss_course.component.css'] 
@@ -15,6 +17,10 @@ import { LessonService, AuthenticationService, AlertService } from '../_services
 
 export class LessonComponent implements OnInit {
   lesson: any[] = [];
+
+  course: any = {}
+
+  item: any = {};
 
   searchText = '';
   id!: any;
@@ -25,7 +31,9 @@ export class LessonComponent implements OnInit {
       private alertService: AlertService,
 
       private _Activatedroute:ActivatedRoute,
-      private router: Router
+      private router: Router,
+
+      private modalService: ModalService
   ) {
     //this.id = this.router.getCurrentNavigation().extras.state.example
   }
@@ -49,7 +57,37 @@ export class LessonComponent implements OnInit {
         this.alertService.error('Error, Data (Lesson) was unsuccesfully retrieved');
       } 
     );
+
+    this.courseService.getCourseById(this.id)
+    .pipe(first())
+    .subscribe(
+      course => {
+        this.course = course;
+      },
+      error => {
+        this.alertService.error('Error, Data was unsuccesfully retrieved');
+      } 
+    );
   }
+
+  openModal(id: string, lessonId: number) {
+    this.modalService.open(id);
+
+    this.lessonService.getLessonById(lessonId)
+    .pipe(first())
+    .subscribe(
+      item => {
+        this.item = item;
+      },
+      error => {
+        this.alertService.error('Error, Data was unsuccesfully retrieved');
+      } 
+    );
+}
+
+closeModal(id: string) {
+    this.modalService.close(id);
+}
 
     newLessonClicked = false;
 

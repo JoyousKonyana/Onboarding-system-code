@@ -1,24 +1,20 @@
 <div class="AddEmployeeTitleContainer">
     <div class="addEmployeeTitleContainer">
       <div>
-        Lesson
+        {{course.couresName}} >> Lessons
       </div>
-      <br/>
       <div class="btn btn-primary" (click)="addNewLessonBtn()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
         </svg>
       </div>
       <div class="btn btn-link" (click)="testData()">Populate Data</div>
-      <br/>
-      <p></p>
-    </div>
-    <div class="addEmployeeBtnContainer">
-    </div>
-    </div>
+  </div>
+</div>
     
     <div *ngIf="newLessonClicked">
     <div class="formWrapper">
+      <div>Create Lessons</div>
     <form>
       <div class="form-group name">
         <label>Enter Lesson Name:</label>
@@ -85,6 +81,7 @@
           <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
           </svg>
         </button>
+        <button class="btn btn-info" (click)="openModal('custom-modal-1', item.lessonId)">Read More</button>
         </td>
       </tr>
     </tbody>
@@ -92,7 +89,7 @@
     </div>
     
     <div class="editEmployeeTitleContainer">
-    <div class="">Update Course</div>
+    <div>Update Lesson</div>
     </div>
     
     <form>
@@ -123,3 +120,8 @@
     Update</button>
     </form>
     
+    <jw-modal id="custom-modal-1">
+      <h1>Lesson {{item.lessonName}}!</h1>
+      <p>Description: {{item.lessonDescription}}</p>
+      <button (click)="closeModal('custom-modal-1');">Close</button>
+  </jw-modal>

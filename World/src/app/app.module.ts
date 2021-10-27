@@ -35,16 +35,17 @@ import {
  } from './equipment';
 
  import {
-   CourseComponent, 
-   Assign_CourseComponent,
+    CourseComponent, 
+    Assign_CourseComponent,
     Learning_OutcomeComponent,
-   Learning_ContentComponent,
-   SS_CourseComponent,
-   CRUD_AchievementComponent,
-  LessonComponent,
+    Learning_ContentComponent,
+    SS_CourseComponent,
+    CRUD_AchievementComponent,
+    LessonComponent,
     Set_QuizComponent,
     QuestionComponent,
     OptionComponent,
+    Question_BankComponent
 } from './course';
 
 import {
@@ -95,6 +96,8 @@ import {
 import {
   AdminComponent
 } from './role';
+
+import { ModalModule } from './_modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -150,6 +153,7 @@ import { ChartsModule } from 'ng2-charts';
     Learning_ContentComponent,
     Set_QuizComponent,
     QuestionComponent,
+    Question_BankComponent,
   
     QuestionComponent,
     OptionComponent,
@@ -215,6 +219,8 @@ import { ChartsModule } from 'ng2-charts';
     ChartsModule,
     //BsDatepickerModule.forRoot(),
     //DatepickerModule.forRoot(),
+
+    ModalModule,
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

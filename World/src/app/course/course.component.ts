@@ -17,6 +17,8 @@ export class CourseComponent implements OnInit {
 
   searchText = '';
 
+  date!: string;
+
   constructor(
       private courseService: CourseService,
       private alertService: AlertService,
@@ -28,6 +30,8 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() { 
       this.loadAll();
+
+      this.date = new Date().toISOString().slice(0, 10);
   }
 
   private loadAll() {

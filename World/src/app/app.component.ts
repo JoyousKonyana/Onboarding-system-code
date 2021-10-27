@@ -16,6 +16,14 @@ import { User_RoleService, EmployeeService, AlertService } from './_services';
 })
 export class AppComponent implements OnInit{
 
+  //Pages and their boolean 
+  users: boolean = false;
+  administrator: boolean = false;
+  equipment: boolean = false;
+  course: boolean = false;
+  onboarder: boolean = false;
+  report: boolean = false;
+
   title = 'bmw-onboarder-front';
 
   public sidebarShow: boolean = false;
@@ -26,7 +34,11 @@ export class AppComponent implements OnInit{
 
   user_role: any = {};
 
-  role: any = 'super user';
+  //Array to read user role description
+  role: any = {};
+
+  //Hold string to later store it into array
+  dataHolder!: string;
 
   model: any;
   model2: any;
@@ -55,47 +67,55 @@ export class AppComponent implements OnInit{
       .subscribe(user => {
         this.user = user;
         console.log(this.user);
-        this.role = this.user.userRole.userRoleName;
-        
-        
       });
-
-      this.model2 = this.user.userRoleId;
-
-      // this.user_roleService.getUser_RoleById(1)
-      //   .pipe(first())
-      //   .subscribe(
-      //     user_role => {
-      //       this.user_role = user_role;
-      //       console.log(this.user_role);
-      //     }
-      //   );
 
     this.findUserRole()
   }
 
   findUserRole() {
-  
-    this.role = this.user.userRole.userRoleName;
-    alert(this.role);
-    
+    this.dataHolder = this.user.userRole.userRoleDescription ;
+    this.role = this.dataHolder.split(" ");//This split string to an array when system detects space
 
-
-    // JSON.parse(localStorage.getItem('token'));
+    for(let i=0; i < this.role.length; i++){
+      if(this.role[i] == "users" || this.role[i] == "Users"){
+        this.users = true;
+      }
+      if(this.role[i] == "administrator" || this.role[i] == "Administrator"){
+        this.administrator = true;
+      }
+      if(this.role[i] == "equipment" || this.role[i] == "Equipment"){
+        this.equipment = true;
+      }
+      if(this.role[i] == "onboarder" || this.role[i] == "Onboarder"){
+        this.onboarder = true;
+      }
+      if(this.role[i] == "course" || this.role[i] == "Course"){
+        this.course = true;
+      }
+      if(this.role[i] == "report" || this.role[i] == "Report"){
+        this.report = true;
+      }
+    }
   }
 
   //Block features according to user role
-  get isAdmin() {
-    return this.role == 'administrator' || this.role == 'SuperUser' ? true:false;
+  get isUsers() {
+    return this.users == true ? true:false;
+  }
+  get isAdministraor() {
+    return this.administrator == true ? true:false;
+  }
+  get isEquipment() {
+    return this.equipment == true ? true:false;
+  }
+  get isCourse() {
+    return this.course == true ? true:false;
   }
   get isOnboarder() {
-    return this.role == 'onboarder'? true:false;
+    return this.onboarder == true ? true:false;
   }
   get isReport() {
-    return this.role == 'Manager' || this.role == 'Administrator' || this.role === 'SuperUser';
-  }
-  get isOfficeAdmin() {
-    return this.role === 'office administrator' || this.role === 'administrator' || this.role === 'super user';
+    return this.report == true ? true:false;
   }
 
   logout() {

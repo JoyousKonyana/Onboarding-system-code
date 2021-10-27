@@ -8,3 +8,4 @@ export * from './set_quiz.component';
  export * from './crud_achievement.component';
  export * from './question.component';
  export * from './option.component';
+ export * from './question_bank.component';

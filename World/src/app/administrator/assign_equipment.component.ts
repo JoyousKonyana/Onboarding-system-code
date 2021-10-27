@@ -18,6 +18,8 @@ export class Assign_EquipmentComponent implements OnInit {
   onboarder: any[] = [];
   onboarder_equipment: AssignEquipment[] = [];
 
+  date!: string;
+
   constructor(
       private onboarderService: OnboarderService,
       private equipmentService: EquipmentService,
@@ -36,6 +38,8 @@ export class Assign_EquipmentComponent implements OnInit {
 
   ngOnInit() { 
       this.loadAll();
+
+      this.date = new Date().toISOString().slice(0, 10);
   }
 
 private loadAll() {

@@ -19,6 +19,8 @@ export class EquipmentComponent implements OnInit {
 
     searchText = '';
 
+    date!: string;
+
     constructor(
       private equipmentService: EquipmentService,
       private alertService: AlertService,
@@ -41,6 +43,8 @@ export class EquipmentComponent implements OnInit {
 
     ngOnInit() { 
       this.loadAll();
+
+      this.date = new Date().toISOString().slice(0, 10);
   }
   
     private loadAll() {
@@ -99,11 +103,6 @@ export class EquipmentComponent implements OnInit {
     WarrantyId: 1
   };
 
-  // open(id: number) {
-  //   const modalRef = this.equipmentService.getEquipmentById(id);
-  //   modalRef.componentInstance.lesson = lesson;
-  // }
-
   testData(){
     this.equipment.push(
       {
@@ -137,21 +136,19 @@ export class EquipmentComponent implements OnInit {
     this.model3.EquipmentTypeId = this.registerEquipmentForm.get('equipment_type')?.value;
     this.model3.EquipmentTradeInDeadline = this.registerEquipmentForm.get('EquipmentTradeInDeadline')?.value;
     this.model3.EquipmentBrandId = this.registerEquipmentForm.get('equipment_brand')?.value;
-   
-  
-   
     this.model3.EquipmentSerialNumber = String(this.registerEquipmentForm.get('EquipmentSerialNumber')?.value);
 
     this.equipmentService.create(this.model3)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Creation was successful', true);
+                    this.alertService.success('Equipment was successfully Registered', true);
                     this.loadAll();
                     this.newEquipmentClicked = !this.newEquipmentClicked;
                 },
                 error => {
                   this.alertService.error('Error, Creation was unsuccesful');
+                  this.loadAll();
               });
   }
 
@@ -162,7 +159,7 @@ export class EquipmentComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Deletion was successful', true);
+                    this.alertService.success('Deletion of Equipment was successful', true);
                     this.loadAll();
                 },
                 error => {
@@ -252,7 +249,5 @@ export class EquipmentComponent implements OnInit {
   CloseReport_QueryBtn(){
       this.newReport_QueryClicked = !this.newReport_QueryClicked;
   }
-
-  
   
 }
