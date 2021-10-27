@@ -1,11 +1,8 @@
 import { Lesson_ContentService } from './../_services/lesson_conent.service';
 import { Lesson_Content } from './../_models/lesson_content';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
-import { User } from '../_models';
-import { UserService, AuthenticationService, AlertService } from '../_services';
+import { AlertService } from '../_services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
@@ -16,14 +13,9 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 
 export class Learning_ContentComponent implements OnInit {
 
-    create: boolean = false;
-    update: boolean = false;
-
     id: any;
 
-    fileToUpload: File | null = null;
-
-    lesson_content: any = {};
+    lesson_content: any;
 
     constructor(
         private lessoncontentService: Lesson_ContentService,
@@ -35,15 +27,12 @@ export class Learning_ContentComponent implements OnInit {
   ) {
   }
 
-  dropDown = this.form.group({
-    ArchiveStatusId: new FormControl('', Validators.required),
-    LessonContenetTypeId: new FormControl ('',Validators.required),
-  })
-
     ngOnInit() {
     this._Activatedroute.paramMap.subscribe(params => { 
         this.id = params.get('id'); 
       });
+
+      this.loadAll();
     }
 
     loadAll() {
@@ -57,13 +46,6 @@ export class Learning_ContentComponent implements OnInit {
             this.alertService.error('Error, Data was unsuccesfully retrieved');
           } 
         );
-
-        if(this.lesson_content == null){
-            this.create = true;
-        }
-        else{
-            this.create = false;
-        }
       }
 
     model: Lesson_Content = {
@@ -84,14 +66,10 @@ export class Learning_ContentComponent implements OnInit {
         }
     }
 
-    handleFileInput(files: any) {
-        this.fileToUpload = files.item(0);
-    }
-
     submit() {
         this.model.LessonOutcomeId = this.id;
 
-        if(this.create = true){
+        if(this.id){
             this.lessoncontentService.create(this.model)
                 .pipe(first())
                 .subscribe(data => {
@@ -112,9 +90,5 @@ export class Learning_ContentComponent implements OnInit {
 
         
       }
-
-  setContent(){
-    
-  }
 
  }

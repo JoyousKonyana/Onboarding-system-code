@@ -295,11 +295,11 @@ const routes: Routes = [
    component: Learning_OutcomeComponent, 
    //canActivate: [AuthGuard], data: { roles: [Role.Admin] } 
   },
-//  { 
-//    path: 'learning_content/:id', 
-//    component: Learning_ContentComponent, 
-//    //canActivate: [AuthGuard], data: { roles: [Role.Admin] 
-//   },
+ { 
+   path: 'learning_content/:id', 
+   component: Learning_ContentComponent, 
+   //canActivate: [AuthGuard], data: { roles: [Role.Admin] 
+  },
  { 
    path: 'set_quiz/:id', 
    component: Set_QuizComponent, 

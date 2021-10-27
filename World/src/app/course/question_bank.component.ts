@@ -3,12 +3,8 @@ import { QuizService } from './../_services/quiz.service';
 import { CourseService } from './../_services/course.service';
 
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-
-import { Lesson } from '../_models';
-import { LessonService, AuthenticationService, AlertService } from '../_services';
+import { AlertService } from '../_services';
 
 @Component({ 
     templateUrl: 'question_bank.component.html',

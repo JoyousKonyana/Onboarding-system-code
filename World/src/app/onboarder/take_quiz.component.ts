@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../_services';
+import { ModalService } from '../_modal';
 
 @Component({
   templateUrl: './take_quiz.component.html',
@@ -13,31 +14,29 @@ import { AlertService } from '../_services';
 })
 export class Take_QuizComponent implements OnInit {
   //Store from Database
-  quiz: any = {};
-  question: any[] = [];
-  option: any [] = [];
-  dataHolder: any [] = [];
+  quiz: any;
+  question: any;
+
+  //Stores users answer and later compares
+  model!: string;
+
+  //Keep track of user scores
+  score!: number;
+
+  //We store the mark Requirement to pass Quiz here
+  myValue = 0;
 
   id:any;
-  
- questions:any;
- currentIndex:any; //number
- notAttempted:any;
- correct:any;
- currentQuestionSet:any;
- start=false;
- gameover=false;
- buttonname="Start Quiz";
 
 constructor(
   private alertService: AlertService,
   private quizService: QuizService,
 
+  private modalService: ModalService,
+
   private _Activatedroute:ActivatedRoute,
   private router: Router,
 ) {
-      this.currentIndex=0;
-      //this.currentQuestionSet= this.questions[this.currentIndex];
 }
 
  ngOnInit() { 
@@ -46,9 +45,6 @@ constructor(
   });
 
   this.loadAll();
-
-  this.currentIndex=0;
-  this.currentQuestionSet= this.questions[this.currentIndex];
  }
 
   loadAll() {
@@ -64,14 +60,14 @@ constructor(
         this.alertService.error('Error, Data (Quiz) was unsuccesfully retrieved');
       } 
     );
+  }
 
-    if(this.quiz == null)
-    {
-      this.alertService.error('Quiz is currently Empty. Please wait for Administrator to make Quiz Available');
-    }
-    else{
-      //Lets Get All The Question For This Quiz
-      this.quizService.getQuestionByQuizID(9)
+  openModal(id: string, quizId: number, index: number) {
+    this.modalService.open(id);
+
+    this.myValue = this.question[index].quizMarkRequirement;
+
+    this.quizService.getQuestionByQuizID(quizId)
       .pipe(first())
       .subscribe(
         question => {
@@ -82,82 +78,41 @@ constructor(
           this.alertService.error('Error, Data (Question) was unsuccesfully retrieved');
         } 
       );
+  }
 
-      if(this.question == null){
-      }
-      else{
-        //Lets Get All The Option For This Quiz
-            //First We Need too Loop since we are getting by Question ID
-        for(let i = 0; i < this.question.length; i++) {
-      this.quizService.getOptionById(this.question[i].questionId)
-        .pipe(first())
-        .subscribe(
-          dataHolder => {
-            this.dataHolder = dataHolder;
-            this.option.push(this.dataHolder)
-            console.log(this.dataHolder)
-          },
-          error => {
-            this.alertService.error('Error, Data (Option) was unsuccesfully retrieved');
-          } 
-        );
+  closeModal(id: string) {
+    this.modalService.close(id);
+  }
 
-        //We Need to also Loop all the Options in this Question and push to final array
-        for(let i = 0; i < this.question.length; i++) {
-          this.option.push(this.dataHolder[i]);
-        }
-        }
-      }
+  saveAnswer(index: number){
+    if(this.model = this.question[index].questionAnswer)
+    {
+      this.score += Number(this.question[index].questionMarkAllocation);
+
+      //Empty model
+      this.model = ''
+
+      //Remove the Question
+      this.question[index].splice(index, 1)
+      alert('Answer Saved');
     }
-      this.loadToDisplayArray();
+    else{
+      //Empty Model
+      this.model = ''
+
+      //Remove the Question
+      this.question[index].splice(index, 1)
+      alert('Answer Saved');
     }
+  }
 
- loadToDisplayArray(){
-  for(let i = 0; i < this.question.length; i++) {
-    this.questions[i].id = this.question[i].questionId;
-    this.questions[i].question = this.question[i].questionDescription;
-    this.questions[i].answer = this.question[i].questionAnswer;
-
-    for(let x = 0; x < this.option.length; x++) {
-      if(this.option[x].questionId == this.question[i].questionId){
-        this.questions[i].option[x].ids = this.option[x].optionId;
-        this.questions[i].option[x].optionId = this.option[x].optionNo;
-        this.questions[i].option[x].name = this.option[x].optionDescription;
+  submitQuiz(){
+    if(this.question.length == 0){
+      if(this.score >= this.myValue){
+        alert("Congratulation, you met the minimum requirement of " + this.myValue + ", You have passed.");
+        this.score = 0;
       }
     }
   }
- }
-  
-     next(){
-    this.currentIndex = this.currentIndex + 1;
-    this.currentQuestionSet= this.questions[this.currentIndex];
-    //this.currentQuestionSet1= this.question[this.currentIndex];
-   }
 
-   submit(){
-    this.buttonname="Retry";
-    if(this.currentIndex+1==this.questions.length){
-       this.gameover=true;
-       this.start=false;
-         this.correct=0;
-    this.notAttempted=0;
-    this.questions.map((x: { selected: number; answer: any; })=>{
-        if(x.selected!=0){
-          if(x.selected == x.answer)
-            this.correct=this.correct + 1;
-        }
-        else{
-          this.notAttempted=this.notAttempted + 1;
-        }
-        x.selected=0;
-    });
-  }
-  
-   }
-   startQuiz(){
-    this.gameover=false;
-    this.currentIndex=0;
-   this.currentQuestionSet= this.questions[this.currentIndex];
-      this.start=true;
-   }
 }

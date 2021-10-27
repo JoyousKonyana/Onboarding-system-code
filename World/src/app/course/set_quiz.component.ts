@@ -1,13 +1,8 @@
 import { Quiz } from './../_models/quiz';
 import { QuizService } from './../_services/quiz.service';
-import { Lesson_ContentService } from './../_services/lesson_conent.service';
-import { Lesson_Content } from './../_models/lesson_content';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
-import { User } from '../_models';
-import { UserService, AuthenticationService, AlertService } from '../_services';
+import { AlertService } from '../_services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
@@ -25,7 +20,7 @@ export class Set_QuizComponent implements OnInit {
 
     fileToUpload: File | null = null;
 
-    quiz: any = {};
+    quiz: any;
 
     constructor(
         private quizSerivce: QuizService,
@@ -37,15 +32,12 @@ export class Set_QuizComponent implements OnInit {
   ) {
   }
 
-  dropDown = this.form.group({
-    ArchiveStatusId: new FormControl('', Validators.required),
-    LessonContenetTypeId: new FormControl ('',Validators.required),
-  })
-
     ngOnInit() {
-    this._Activatedroute.paramMap.subscribe(params => { 
+      this._Activatedroute.paramMap.subscribe(params => { 
         this.id = params.get('id'); 
       });
+
+      this.loadAll();
     }
 
     loadAll() {
@@ -59,14 +51,10 @@ export class Set_QuizComponent implements OnInit {
             this.alertService.error('Error, Data was unsuccesfully retrieved');
           } 
         );
+    }
 
-        if(this.quiz == null){
-            this.create = true;
-        }
-        else{
-            this.create = false;
-        }
-      }
+    newQuizClicked = false;
+    updateQuizClicked = false;
 
     model: Quiz = {
       QuizId: 0,
@@ -78,34 +66,54 @@ export class Set_QuizComponent implements OnInit {
       NumberOfQuestions: 5
     }
 
-    submit() {
-        this.model.LessonOutcomeId = this.id;
+    addQuiz(){
+      this.model.LessonOutcomeId = this.id;
 
-        if(this.create = true){
-            this.quizSerivce.createQuiz(this.model)
+      this.quizSerivce.createQuiz(this.model)
                 .pipe(first())
                 .subscribe(data => {
-                    this.alertService.success('Successful Creation')
+                    this.alertService.success('Quiz was Successfully Created')
                     this.loadAll();
                 }, error => {
                     this.alertService.success('Unsuccessful Creation')
             });
-        }
-        else{
-            this.quizSerivce.updateQuiz(this.id, this.model)
+    }
+
+    myValue = 0;
+
+    editQuiz(editQuizInfo: number) {
+      this.model.QuizDescription = this.quiz[editQuizInfo].lessonDescription;
+      this.model.QuizMarkRequirement = this.quiz[editQuizInfo].lessonName;
+      this.model.QuizDueDate = this.quiz[editQuizInfo].quizDueDate;
+      this.model.NumberOfQuestions = this.quiz[editQuizInfo].numberOfQuestions;
+      this.myValue = editQuizInfo;
+    }
+
+    updateQuiz(){
+      let editQuizInfo = this.myValue;
+
+      this.model.LessonOutcomeId = this.id;
+
+      for(let i = 0; i < this.quiz.length; i++) {
+        if(i == editQuizInfo) 
+        {
+          this.quizSerivce.updateQuiz(this.quiz[editQuizInfo].quizId, this.model)
                 .pipe(first())
                 .subscribe(data => {
-                    this.alertService.success('Successful Update')
+                    this.alertService.success('Quiz was Successfully Updated')
                 }, error => {
                     this.alertService.success('Unsuccessful Update')
             });
         }
+      }
+    }
 
-        
+    addNewQuizBtn() {
+      this.newQuizClicked = !this.newQuizClicked;
       }
 
-  setContent(){
-    
-  }
+      closeUpdate(){
+        this.updateQuizClicked = !this.updateQuizClicked;
+      }
 
  }

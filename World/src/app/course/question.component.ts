@@ -69,17 +69,18 @@ export class QuestionComponent implements OnInit {
   };
 
   addQuestion() { 
-    if(Object.keys(this.model).length < 2)
+    if(Object.keys(this.model).length < 3)
     {
       this.alertService.error("Error, you have an empty feild");
       this.newQuestionClicked = !this.newQuestionClicked;
       this.model = {};
     }
-    else if((Object.keys(this.model).length==2))
+    else if((Object.keys(this.model).length==3))
     {
       this.model3.QuizId = this.id;
       this.model3.QuestionDescription = this.model.QuestionDescription;
       this.model3.QuestionAnswer = this.model.QuestionAnswer;
+      this.model3.QuestionMarkAllocation = this.model.QuestionMarkAllocation;
     
       this.quizService.createQuestion(this.model3)
             .pipe(first())
@@ -113,8 +114,9 @@ export class QuestionComponent implements OnInit {
   myValue = 0;
 
   editQuestion(editQuestionInfo: number) {
-    this.model2.QuestionDescription = this.question[editQuestionInfo].QuestionDescription;
-    this.model2.QuestionAnswer = this.question[editQuestionInfo].QuestionAnswer;
+    this.model2.QuestionDescription = this.question[editQuestionInfo].questionDescription;
+    this.model2.QuestionAnswer = this.question[editQuestionInfo].questionAnswer;
+    this.model2.QuestionMarkAllocation = this.question[editQuestionInfo].questionMarkAllocation;
     this.myValue = editQuestionInfo;
   }
 
@@ -124,6 +126,7 @@ export class QuestionComponent implements OnInit {
     this.model3.QuizId = this.id;
     this.model3.QuestionAnswer = this.model2.QuestionAnswer;
     this.model3.QuestionDescription = this.model2.QuestionDescription;
+    this.model3.QuestionMarkAllocation = this.model2.QuestionMarkAllocation;
 
     for(let i = 0; i < this.question.length; i++) {
       if(i == editQuestionInfo) 

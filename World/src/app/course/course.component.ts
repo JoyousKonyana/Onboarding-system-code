@@ -6,6 +6,7 @@ import { Course } from '../_models';
 import { CourseService, AlertService } from '../_services';
 
 import { Router } from '@angular/router';
+import { ModalService } from '../_modal';
 
 @Component({ 
     templateUrl: 'course.component.html',
@@ -17,13 +18,17 @@ export class CourseComponent implements OnInit {
 
   searchText = '';
 
+  item: any;
+
   date!: string;
 
   constructor(
       private courseService: CourseService,
       private alertService: AlertService,
 
-      private router: Router
+      private router: Router,
+      
+      private modalService: ModalService
   ) {
 
   }
@@ -58,6 +63,25 @@ export class CourseComponent implements OnInit {
     CourseDueDate: '',
     CourseName: '',
   };
+
+  openModal(id: string, courseId: number) {
+    this.modalService.open(id);
+
+    this.courseService.getCourseById(courseId)
+    .pipe(first())
+    .subscribe(
+      item => {
+        this.item = item;
+      },
+      error => {
+        this.alertService.error('Error, Data was unsuccesfully retrieved');
+      } 
+    );
+}
+
+closeModal(id: string) {
+    this.modalService.close(id);
+}
 
   addCourse() { 
     if(Object.keys(this.model).length < 3)

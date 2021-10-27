@@ -1,31 +1,77 @@
- <h1>
-  Learning Outcome Quiz
+<h1>
+  Quiz
 </h1>
 
-<p></p>
+<!-- This will containt a list of the available Quiz in their Lesson Outcome and their Instruction -->
+<div>
 
-<div class="well col-md-12">
-
-  <div class="col-md-8" *ngIf="start">
-    <h5>{{currentQuestionSet.question}}</h5>
-    <div *ngFor="let o of currentQuestionSet.option">
-      <input type="radio" name="{{currentQuestionSet.id}}" value="{{o.optionid}}" [(ngModel)]="currentQuestionSet.selected" />{{o.name}}
+<div class="container">
+  <div *ngFor="let quiz of quiz; let i = index">
+    
+    <div>
+      <small>This is Quiz: {{quiz.quizId}}</small>
+      <h3>
+        Quiz Description:
+        <br/>
+        {{quiz.quizDescription}}
+      </h3>
+      <p>
+        To pass this Quiz a minimum mark must be achieved of: {{quiz.quizMarkRequirement}}
+      </p>
+      <p>This Quiz is Due: {{quiz.quizDueDate}}</p>
+      <p>There is a total number of Question of: {{quiz.numberOfQuestions}}</p>
+      <button class="btn btn-info" (click)="openModal('custom-modal-1', quiz.quizId, i)">Start Quiz</button>
     </div>
-  </div>
 
-<div class="col-md-4" *ngIf="start">
-    <h5>{{currentIndex+1}}/{{questions.length}}</h5>
-    <input *ngIf="(currentIndex+1) != questions.length" type="button" class="btn btn-primary" value="Next" (click)="next()"/>
+    <hr>
 
   </div>
- <div class="col-md-4" >
-    <input *ngIf="!start" type="button" class="btn btn-warning" value="{{buttonname}}" (click)="startQuiz()"/>
-  </div>
-  <div class="col-md-4" *ngIf="start">
-     <input type="button" class="btn btn-success" value="Submit" (click)="submit()"/> 
-  </div>
-
-  <div *ngIf="gameover"><h5>Result:  {{correct}}/{{questions.length}}</h5></div>
 </div>
 
-<hr/>
+</div>
+
+<!-- This will Contain the Question and the Start Quiz function -->
+<jw-modal id="custom-modal-1">
+  <h1>Quiz in Progress</h1>
+  
+  <div class="container-fluid">
+
+    <div *ngFor="let question of question; let x = index">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Question ID: {{question.questionId}}</div>
+        <div class="panel-body">
+          <h3>
+            Question
+            <br/>
+            {{question.questionDescription}}
+            <br/>
+            <div class="form-group name">
+              <input type="text"
+                     class="form-control input"
+                     id="answer"
+                     name="answer"
+                     [(ngModel)]="model"
+                     placeholder="Answer...">
+            </div>
+            <br/>
+            <button (click)="saveAnswer(x)">Save Answer</button>
+          </h3>
+        </div>
+      </div>
+
+      <hr>
+
+    </div>
+
+  </div>
+
+  <button (click)="submitQuiz()">Submit</button>
+
+  <div *ngIf="question.length == 0" class="container">
+    <h2>You have completed your Quiz. Here are you marks</h2>
+    <h1>Marks: {{score}}</h1>
+  </div>
+
+  <button (click)="closeModal('custom-modal-1');">Close</button>
+</jw-modal>
